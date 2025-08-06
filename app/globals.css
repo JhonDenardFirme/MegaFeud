@@ -24,3 +24,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.button-start {
+  /* 1) vertical gradient from #EB4314 (top) to #0B4C85 (bottom) */
+  background: linear-gradient(to bottom, #fa2525 0%, #1684e5 100%);
+
+  /* 2) “plus-lighter” blend mode */
+  mix-blend-mode: plus-lighter;
+
+}
