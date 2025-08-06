@@ -1,13 +1,16 @@
 import { MegaQuestions } from "@/data/questions";
 import { NextResponse } from "next/server";
 
-export function GET( // GET has 2 Parameters. Request Object and Params Context (Shortcut in NextJS)
+export async function GET( // GET has 2 Parameters. Request Object and Params Context (Shortcut in NextJS)
     request: Request,
-    { params }: { params: { id: string } }): NextResponse {  //NextResponse is a Promise. In regular cases, just NextResponse
+    context: { 
+    params: Promise<{ id: string }> 
+    }): Promise<NextResponse> {  //NextResponse is a Promise. In regular cases, just NextResponse
 
-    const id = Number (params.id)  // Convert to Num
+    const {id} = await context.params;  // Convert to Num
+    const q_id = Number(id);
     // Find the matching ID. Find in questions (q) where question.id === to the id We converted from the URL Param
-    const question = MegaQuestions.find((q) => q.id === id);
+    const question = MegaQuestions.find((q) => q.id === q_id);
 
     if (!question) {
         return NextResponse.json(
