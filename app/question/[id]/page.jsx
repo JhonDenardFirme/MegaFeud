@@ -37,7 +37,7 @@ export default async function page({ params }) {
 
         <div className='linear-blue flex flex-col items-center justify-center w-[75%] h-48 bg-white/80 rounded-2xl relative mix-blend-plus-lighter'>
           <div className='linear-blue flex flex-col items-center justify-center w-20 h-20 absolute top-0 -translate-y-[50%] rounded-full mix-blend-plus-lighter'>
-            <CircleQuestionMark w-full h-full></CircleQuestionMark>
+            <CircleQuestionMark size="100%"></CircleQuestionMark>
           </div>
 
           <div className="absolute mb-8 z-50">

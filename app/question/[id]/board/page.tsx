@@ -1,20 +1,24 @@
 import { ChevronLeft, ChevronRight, CircleQuestionMark } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
-
+import { headers } from 'next/headers';
 
 export default async function page({ params }) {
 
+  // 1) await the params object
   const { id } = await params;
-  // Choose the right base—on Vercel it'll be VERCEL_URL, locally use localhost
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : `http://localhost:${process.env.PORT || 3000}`
 
-  const res = await fetch(
-    `${baseUrl}/api/questions/${id}`,
-    { next: { revalidate: 0 } }
-  )
+  // 2) await headers()
+  const hdr = await headers();
+  const host = hdr.get("x-forwarded-host") ?? hdr.get("host");
+  const protocol = host?.includes("localhost") ? "http" : "https";
+  const origin = `${protocol}://${host}`;
+
+  // 3) now build a valid absolute URL
+  const res = await fetch(`${origin}/api/questions/${id}`, {
+    next: { revalidate: 0 },
+  });
+  if (!res.ok) return <p>Question not found.</p>;
   const question = await res.json();
 
   return (
@@ -32,7 +36,7 @@ export default async function page({ params }) {
       <div className='absolute w-full h-full black-overlay mix-blend-overlay -z-20 top-0'></div>
       <div className='absolute w-full h-full black-overlay-top mix-blend-multiply -z-20 top-0'></div>
 
-      
+
 
 
       {/* MAIN CONTAINER */}
@@ -56,7 +60,7 @@ export default async function page({ params }) {
                     ' 1px  1px 0 #000',
                   ].join(',')
                 }}>
-                
+
               </input>
 
               <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2'
@@ -78,26 +82,26 @@ export default async function page({ params }) {
 
           {/* QUESTION BOARD */}
           <div className='linear-blue flex flex-col items-center justify-center w-[60%] h-32 bg-white/80 rounded-2xl relative mix-blend-plus-lighter'>
-          <div className='linear-blue flex flex-col items-center justify-center w-16 h-16 absolute top-0 -translate-y-[50%] rounded-full mix-blend-plus-lighter'>
-            <CircleQuestionMark w-full h-full></CircleQuestionMark>
-          </div>
+            <div className='linear-blue flex flex-col items-center justify-center w-16 h-16 absolute top-0 -translate-y-[50%] rounded-full mix-blend-plus-lighter'>
+              <CircleQuestionMark size="100%"></CircleQuestionMark>
+            </div>
 
-          <div className="absolute mb-4 z-50">
-            <img src={`/assets/QUESTION${id}.png`} className='h-4'></img>
-          </div>
+            <div className="absolute mb-4 z-50">
+              <img src={`/assets/QUESTION${id}.png`} className='h-4'></img>
+            </div>
 
-          <p className='text-2xl mt-10 filter drop-shadow-lg text-outline'
-            style={{
-              textShadow: [
-                '-1px -1px 0 #000',
-                ' 1px -1px 0 #000',
-                '-1px  1px 0 #000',
-                ' 1px  1px 0 #000',
-              ].join(',')
-            }}>
-            {question.question}
-          </p>
-        </div>
+            <p className='text-2xl mt-10 filter drop-shadow-lg text-outline'
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              {question.question}
+            </p>
+          </div>
 
 
           {/* TEAM B SCOREBOARD */}
@@ -116,7 +120,7 @@ export default async function page({ params }) {
                     ' 1px  1px 0 #000',
                   ].join(',')
                 }}>
-                
+
               </input>
 
               <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2'
@@ -142,345 +146,345 @@ export default async function page({ params }) {
       {/* ANSWER BOARD */}
 
       <div className='grid grid-cols-2 grid-rows-5 gap-8 items-center justify-center w-full h-[50%]  mt-8 py-8 px-64 gap-x-22'>
-      
-      <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
 
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
 
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
+          </div>
+        </div>
+
+        <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
+
+          <div className="relative inline-block group">
+
+            <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
+
+            <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
+              <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
+            </div>
+          </div>
+
+
+
+          <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
+            <p className='text-lg filter drop-shadow-lg text-outline '
+              style={{
+                textShadow: [
+                  '-1px -1px 0 #000',
+                  ' 1px -1px 0 #000',
+                  '-1px  1px 0 #000',
+                  ' 1px  1px 0 #000',
+                ].join(',')
+              }}>
+              ITEM 1
+            </p>
+
+            <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
+            <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
+              <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
+            </div>
           </div>
         </div>
 
 
 
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-            <div className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-        <div className="relative inline-block group">
-          
-          <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer"/>
-
-          <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-            <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-          </div>
-        </div>
-
-
-
-        <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline '
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                ITEM 1
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src="/assets/scores/12.png" alt="score" className='h-4'></img>
-              </div>
-        </div>
-      </div>
-
-      
-
 
 
       </div>
 
 
-      
+
 
       {/* NAVIGATION BUTTONS */}
       <div className='absolute flex flex-row gap-16 items-center justify-center w-1/2 bottom-8'>
