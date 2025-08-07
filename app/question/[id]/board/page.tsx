@@ -15,9 +15,11 @@ export default async function page({ params }) {
   const origin = `${protocol}://${host}`;
 
   // 3) now build a valid absolute URL
-  const res = await fetch(`${origin}/api/questions/${id}`, {
-    next: { revalidate: 0 },
-  });
+  const res = await fetch(
+    `${origin}/api/questions/${id}`,
+    { next: { revalidate: 0 } }
+  );
+
   if (!res.ok) return <p>Question not found.</p>;
   const question = await res.json();
 
