@@ -1,25 +1,26 @@
+// app/api/questions/[id]/route.ts
 import { MegaQuestions } from "@/data/questions";
 import { NextResponse } from "next/server";
 
-export async function GET( // GET has 2 Parameters. Request Object and Params Context (Shortcut in NextJS)
-    request: Request,
-    context: { 
-    params: Promise<{ id: string }> 
-    }): Promise<NextResponse> {  //NextResponse is a Promise. In regular cases, just NextResponse
+export function GET( // GET has 2 Parameters: Request Object and Params Context (destructured here)
+  request: Request,
+  { params }: { params: { id: string } }    // Next.js passes `params` as a plain object
+): NextResponse {                            // returns a NextResponse directly
 
-    const {id} = await context.params;  // Convert to Num
-    const q_id = Number(id);
-    // Find the matching ID. Find in questions (q) where question.id === to the id We converted from the URL Param
-    const question = MegaQuestions.find((q) => q.id === q_id);
+  // Convert the URL param (string) into a number
+  const q_id = Number(params.id);
 
-    if (!question) {
-        return NextResponse.json(
-            { error: `QuestionID = ${id} not found` },
-            { status: 404 }
-        )
-    }
+  // Find the matching ID. Find in questions (q) where q.id === the numeric ID we converted
+  const question = MegaQuestions.find((q) => q.id === q_id);
 
-    // If question is not null, proceed to returning the found NextResponse
-    return NextResponse.json(question);
+  if (!question) {
+    // If no question was found, return a 404 JSON response
+    return NextResponse.json(
+      { error: `QuestionID = ${params.id} not found` },
+      { status: 404 }
+    );
+  }
 
+  // If question is not null, proceed to returning the found NextResponse
+  return NextResponse.json(question);
 }

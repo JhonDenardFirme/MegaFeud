@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap');
+
 @import "tailwindcss";
 
 :root {
@@ -22,7 +24,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Gasoek One",Arial, Helvetica, sans-serif;
 }
 
 
@@ -33,4 +35,59 @@ body {
   /* 2) “plus-lighter” blend mode */
   mix-blend-mode: plus-lighter;
 
+}
+
+.linear-blue{
+  background: linear-gradient(to bottom, #4B4B4B 0%, #2C92EA 100%)
+}
+
+.linear-blue-outline {
+  /* 1) Make a transparent border so there’s space for the gradient */
+  border: 1px solid transparent;
+
+  /* 2) Tell it to use your gradient as the border “image” */
+  border-image-source: linear-gradient(to bottom, #4B4B4B 0%, #2C92EA 100%);
+  border-image-slice: 1;
+}
+
+.text-linear-orange {
+  /* 1) your gradient */
+  background: linear-gradient(to bottom, #F1D02A 0%, #FF7C18 100%);
+
+  /* 2) clip the background to the text glyphs */
+  -webkit-background-clip: text;
+          background-clip: text;
+
+  /* 3) make the text transparent so you see the gradient */
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+
+
+.black-overlay{
+  background: linear-gradient(to top, #000000 0%, #ffffff 100%)
+}
+
+.black-overlay-top{
+  background: linear-gradient(to top, #ffffff 0%, #ffffff 40%, #000000 100%)
+}
+
+
+.text-gradient-outline {
+  /* 1) your gradient fill */
+  background: linear-gradient(to bottom, #F1D02A 0%, #FF7C18 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+
+  /* 2) make the text itself transparent so the gradient shows through */
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+
+  /* 3) add a 2px black stroke around each glyph */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #000;
+
+  /* 4) ensure no weird blending on this element */
+  mix-blend-mode: normal;
+  display: inline-block; /* helps with clipping/stroking */
 }
