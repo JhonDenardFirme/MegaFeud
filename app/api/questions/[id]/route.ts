@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export function GET( // GET has 2 Parameters: Request Object and Params Context (destructured here)
   request: Request,
-  { params }: { params: { id: string } }    // Next.js passes `params` as a plain object
+  { params }    // Next.js passes `params` as a plain object
 ): NextResponse {                            // returns a NextResponse directly
 
   // Convert the URL param (string) into a number
