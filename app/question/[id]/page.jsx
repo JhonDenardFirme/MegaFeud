@@ -1,20 +1,27 @@
 import { ChevronLeft, ChevronRight, CircleQuestionMark } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
+import { headers } from 'next/headers';
 
 
 export default async function page({ params }) {
 
+  // 1) await the params object
   const { id } = await params;
-  // Choose the right base—on Vercel it'll be VERCEL_URL, locally use localhost
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : `http://localhost:${process.env.PORT || 3000}`
 
+  // 2) await headers()
+  const hdr = await headers();
+  const host = hdr.get("x-forwarded-host") ?? hdr.get("host");
+  const protocol = host?.includes("localhost") ? "http" : "https";
+  const origin = `${protocol}://${host}`;
+
+  // 3) now build a valid absolute URL
   const res = await fetch(
-    `${baseUrl}/api/questions/${id}`,
+    `${origin}/api/questions/${id}`,
     { next: { revalidate: 0 } }
-  )
+  );
+
+  if (!res.ok) return <p>Question not found.</p>;
   const question = await res.json();
 
   return (
@@ -37,7 +44,7 @@ export default async function page({ params }) {
 
         <div className='linear-blue flex flex-col items-center justify-center w-[75%] h-48 bg-white/80 rounded-2xl relative mix-blend-plus-lighter'>
           <div className='linear-blue flex flex-col items-center justify-center w-20 h-20 absolute top-0 -translate-y-[50%] rounded-full mix-blend-plus-lighter'>
-            <CircleQuestionMark size="100%"></CircleQuestionMark>
+            <CircleQuestionMark size="60%"></CircleQuestionMark>
           </div>
 
           <div className="absolute mb-8 z-50">
@@ -66,7 +73,7 @@ export default async function page({ params }) {
 
       {/* NAVIGATION BUTTONS */}
       <div className='absolute flex flex-row gap-16 items-center justify-center w-1/2 bottom-8'>
-        <Link href="/">
+        <Link href={id==1? '/' : `/question/${id-1}/board`}>
           <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center'>
             <ChevronLeft className="w-6 h-6 text-white -ml-0.5" />
           </div>

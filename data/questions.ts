@@ -12,64 +12,66 @@ export interface Question {
 export const MegaQuestions: Question[] = [
     {
         id: 1,
-        question: "Question 1 goes here",
+        question: "What are the Top Words for Ayala Land?",
         answers: [
-            { answer: "Item 1", points: 18 },
-            { answer: "Item 2", points: 12 },
-            { answer: "Item 3", points: 10 },
-            { answer: "Item 4", points: 8 },
-            { answer: "Item 5", points: 4 },
-            { answer: "Item 6", points: 2 }
+            { answer: "community", points: 37 },
+            { answer: "makati", points: 36 },
+            { answer: "life", points: 35 },
+            { answer: "estate", points: 34 },
+            { answer: "philippine", points: 31 },
+            { answer: "together", points: 24 },
+            { answer: "space", points: 23 },
+            { answer: "south", points: 22 },
+            { answer: "urban", points: 21 },
+            { answer: "development", points: 21 }
         ]
     },
     {
         id: 2,
-        question: "Question 2 goes here",
+        question: "What are the Top Words for Robinsons Land?",
         answers: [
-            { answer: "Item 1", points: 18 },
-            { answer: "Item 2", points: 12 },
-            { answer: "Item 3", points: 10 },
-            { answer: "Item 4", points: 8 },
-            { answer: "Item 5", points: 4 },
-            { answer: "Item 6", points: 2 }
+            { answer: "hotel", points: 53 },
+            { answer: "mall", points: 48 },
+            { answer: "rlcbuildingbetter", points: 37 },
+            { answer: "life", points: 31 },
+            { answer: "filipino", points: 28 },
+            { answer: "year", points: 27 },
+            { answer: "estate", points: 27 },
+            { answer: "land", points: 27 },
+            { answer: "resort", points: 26 },
+            { answer: "business", points: 26 }
         ]
     },
     {
         id: 3,
-        question: "Question 3 goes here",
+        question: "What are the Top Words for SMDC?",
         answers: [
-            { answer: "Item 1", points: 18 },
-            { answer: "Item 2", points: 12 },
-            { answer: "Item 3", points: 10 },
-            { answer: "Item 4", points: 8 },
-            { answer: "Item 5", points: 4 },
-            { answer: "Item 6", points: 2 }
+            { answer: "home", points: 72 },
+            { answer: "residence", points: 67 },
+            { answer: "life", points: 67 },
+            { answer: "community", points: 45 },
+            { answer: "city", points: 36 },
+            { answer: "experience", points: 27 },
+            { answer: "step", points: 26 },
+            { answer: "smdcthegoodguys", points: 25 },
+            { answer: "designed", points: 23 },
+            { answer: "move", points: 23 }
         ]
     },
     {
         id: 4,
-        question: "Question 4 goes here",
+        question: "What are the Top Words for Megaworld?",
         answers: [
-            { answer: "Item 1", points: 18 },
-            { answer: "Item 2", points: 12 },
-            { answer: "Item 3", points: 10 },
-            { answer: "Item 4", points: 8 },
-            { answer: "Item 5", points: 4 },
-            { answer: "Item 6", points: 2 }
+            { answer: "township", points: 37 },
+            { answer: "new", points: 33 },
+            { answer: "megaworldtownships", points: 24 },
+            { answer: "country", points: 22 },
+            { answer: "first", points: 20 },
+            { answer: "community", points: 18 },
+            { answer: "iloilo", points: 18 },
+            { answer: "philippine", points: 16 },
+            { answer: "global", points: 15 },
+            { answer: "mactan", points: 15 }
         ]
     },
-    {
-        id: 5,
-        question: "Question 5 goes here",
-        answers: [
-            { answer: "Item 1", points: 18 },
-            { answer: "Item 2", points: 12 },
-            { answer: "Item 3", points: 10 },
-            { answer: "Item 4", points: 8 },
-            { answer: "Item 5", points: 4 },
-            { answer: "Item 6", points: 2 }
-        ]
-    },
-
-
-]
+];

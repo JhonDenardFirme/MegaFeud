@@ -65,7 +65,7 @@ body {
 
 
 .black-overlay{
-  background: linear-gradient(to top, #000000 0%, #ffffff 100%)
+  background: linear-gradient(to top, #000000 0%, #000000 30%, #ffffff 100%)
 }
 
 .black-overlay-top{

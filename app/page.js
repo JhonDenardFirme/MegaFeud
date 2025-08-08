@@ -13,7 +13,7 @@ export default function Home() {
         className="absolute inset-0 w-full h-full object-cover object-bottom -z-10"
       />
 
-      {/* Your logo/images */}
+      {/* Header */}
       <div className="flex flex-col items-center justify-center">
         <div className="h-36">
           <img src="/BG/MEGA.png" className="h-full object-cover" alt="Mega Logo" />
@@ -23,8 +23,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Your blended-gradient button */}
-      <Link href={"#"}>
+      {/* Navigation Button */}
+      <Link href={"/question/1"}>
         <div className="button-start py-4 px-32 rounded-2xl mt-16 font-['Gasoek One']">
           START
         </div>
