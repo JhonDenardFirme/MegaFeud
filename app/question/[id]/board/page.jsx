@@ -27,7 +27,14 @@ export default async function page({ params }) {
   if (!res.ok) return <p>Question not found.</p>;
   const question = await res.json();
 
+
+  // Click SFX Logic
+  
+
+
   return (
+
+    
 
     <div className="relative flex flex-col w-full h-screen items-center justify-center isolation isolate">
       {/* VIDEO BG */}

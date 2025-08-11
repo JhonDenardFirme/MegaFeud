@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 export default function AnswerBoard({ answers }) {
@@ -15,15 +15,67 @@ export default function AnswerBoard({ answers }) {
         });
     }, []);
 
+    /* ----------------------- AUDIO (hover + click) -----------------------
+       We “unlock” audio on the first user gesture (pointerdown), then for
+       each hover/click we clone a preloaded <audio> node so overlapping
+       sounds don’t cut each other off.
+    ----------------------------------------------------------------------*/
+
+    // refs
+    const hoverRef = useRef(null);
+    const clickRef = useRef(null);
+    const [audioUnlocked, setAudioUnlocked] = useState(false);
+
+    useEffect(() => {
+    const unlock = async () => {
+        try {
+        if (hoverRef.current) {
+            await hoverRef.current.play();
+            hoverRef.current.pause();
+            hoverRef.current.currentTime = 0;
+        }
+        if (clickRef.current) {
+            await clickRef.current.play();
+            clickRef.current.pause();
+            clickRef.current.currentTime = 0;
+        }
+        setAudioUnlocked(true);
+        } catch {
+        // still blocked; will try again on next gesture
+        }
+    };
+    window.addEventListener('pointerdown', unlock, { once: true });
+    return () => window.removeEventListener('pointerdown', unlock);
+    }, []);
+
+    function playFromRef(ref, volume = 0.6) {
+    if (!audioUnlocked || !ref.current) return;
+    const node = ref.current.cloneNode(true); // <— no TS assertion in JS
+    node.volume = volume;
+    node.play().catch(() => {});
+    }
+
+    const playHover = () => playFromRef(hoverRef, 0.5);
+    const playClick = () => playFromRef(clickRef, 0.65);
+
+
+    
+
     return (
         <div className="grid grid-cols-2 grid-rows-5 gap-8 items-center justify-center w-full h-[50%] mt-8 py-8 px-64 gap-x-22">
+            {/* Preloaded, hidden masters (dummy directory) */}
+            <audio ref={hoverRef} src="/BG/hover.wav" preload="auto" />
+            <audio ref={clickRef} src="/BG/click2.wav" preload="auto" />
+
             {answers.map(({ answer, points }, i) => (
                 <div key={i} className="item-container w-full h-12 flex flex-row items-center justify-center gap-6">
 
                     {/* Diamond button */}
                     <button
                         type="button"
-                        onClick={() => toggle(i)}
+                        onPointerEnter={playHover}               /* hover sound (mouse/touch) */
+                        onFocus={playHover}                      /* keyboard focus a11y */
+                        onClick={() => { playClick(); toggle(i); }} /* click sound + toggle reveal */
                         className="relative inline-block group focus:outline-none hover:cursor-pointer"
                         aria-pressed={revealed[i]}
                         aria-label={revealed[i] ? 'Hide answer' : 'Reveal answer'}
