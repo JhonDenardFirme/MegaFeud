@@ -1,9 +1,58 @@
+'use client';
+import { Volume2Icon, VolumeOffIcon } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
+  const audioRef = useRef(null);
+  const [needsAction, setNeedsAction] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+
+  useEffect(() => {
+    const a = audioRef.current;
+    if (!a) return;
+    a.volume = 0.7;
+    (async () => {
+      try {
+        await a.play();
+        setIsPlaying(true);
+        setNeedsAction(false);
+      } catch {
+        setNeedsAction(true);
+      }
+    })();
+  }, []);
+
+  const enableSound = async () => {
+    const a = audioRef.current;
+    if (!a) return;
+    try {
+      await a.play();
+      setIsPlaying(true);
+      setNeedsAction(false);
+    } catch {
+
+    }
+  };
+
+  const toggleSound = async () => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (a.paused) {
+      try {
+        await a.play();
+        setIsPlaying(true);
+      } catch { }
+    } else {
+      a.pause();
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <main className="relative z-10 flex flex-col w-full h-screen items-center justify-center">
-      {/* Video is now an absolutely-positioned child of <main> */}
+
       <video
         src="/BG/BG3.mp4"
         autoPlay
@@ -13,9 +62,29 @@ export default function Home() {
         className="absolute inset-0 w-full h-full object-cover object-bottom -z-10"
       />
 
-      <audio src="/BG/BGM.mp3" autoPlay loop>
+      <audio ref={audioRef} src="/BG/BGM.mp3" loop preload="auto" />
 
-      </audio>
+
+      {needsAction && (
+        <button
+          onClick={enableSound}
+          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white"
+        >
+          Enable sound
+        </button>
+      )}
+
+
+      {!needsAction && (
+        <button
+          onClick={toggleSound}
+          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white"
+        >
+          {
+            isPlaying ? <Volume2Icon></Volume2Icon> : <VolumeOffIcon></VolumeOffIcon>
+          }
+        </button>
+      )}
 
       {/* Header */}
       <div className="flex flex-col items-center justify-center">
