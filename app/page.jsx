@@ -13,6 +13,10 @@ export default function Home() {
         className="absolute inset-0 w-full h-full object-cover object-bottom -z-10"
       />
 
+      <audio src="/BG/BGM.mp3" autoPlay loop>
+
+      </audio>
+
       {/* Header */}
       <div className="flex flex-col items-center justify-center">
         <div className="h-36">
