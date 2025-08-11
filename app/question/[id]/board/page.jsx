@@ -3,6 +3,8 @@ import Link from 'next/link';
 import React from 'react'
 import { headers } from 'next/headers';
 
+import AnswerBoard from '@/components/AnswerBoard';
+
 export default async function page({ params }) {
 
   // 1) await the params object
@@ -146,46 +148,7 @@ export default async function page({ params }) {
 
 
       {/* ANSWER BOARD */}
-
-      <div className='grid grid-cols-2 grid-rows-5 grid-flow-col gap-8 items-center justify-center w-full h-[50%] mt-8 py-8 px-64 gap-x-22 '>
-
-        { question.answers.map(({ answer, points }, i) => (
-          <div key={i} className='item-container w-full h-12 flex flex-row items-center justify-center gap-6'>
-
-            <div className="relative inline-block group">
-
-              <div className="diamond-outline absolute w-4 h-4 rotate-45 linear-blue-outline mix-blend-plus-lighter opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-170 group-hover:cursor-pointer" />
-
-              <div className="relative z-10 w-4 h-4 rotate-45 linear-blue mix-blend-plus-lighter flex items-center justify-center hover:cursor-pointer">
-                <div className="w-2 h-2 linear-blue mix-blend-plus-lighter" />
-              </div>
-            </div>
-
-
-
-            <div className='question-container flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center justify-start pl-6 relative'>
-              <p className='text-lg filter drop-shadow-lg text-outline tracking-widest'
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                {answer.toUpperCase()}
-              </p>
-
-              <div className='score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-50'></div>
-              <div className='score-container h-full w-18 flex items-center justify-start pl-6 absolute right-0 z-50'>
-                <img src={`/assets/scores/${points}.png`} alt="score" className='h-4'></img>
-              </div>
-            </div>
-          </div>
-        ))
-      }
-
-      </div>
+      <AnswerBoard answers={question.answers}></AnswerBoard>
 
 
       {/* NAVIGATION BUTTONS */}
