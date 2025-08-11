@@ -159,7 +159,7 @@ export default async function page({ params }) {
 
       {/* NAVIGATION BUTTONS */}
       <div className='absolute flex flex-row gap-16 items-center justify-center w-1/2 bottom-8'>
-        <Link href={id==1? `/question/${id}` : `/question/${id-1}`}>
+        <Link href={id==1? `/question/${id}` : `/question/${id}`}>
           <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center'>
             <ChevronLeft className="w-6 h-6 text-white -ml-0.5" />
           </div>
