@@ -3,12 +3,14 @@ import Link from 'next/link';
 import React from 'react'
 import { headers } from 'next/headers';
 
+
 import AnswerBoard from '@/components/AnswerBoard';
 
 export default async function page({ params }) {
 
   // 1) await the params object
   const { id } = await params;
+
 
   // 2) await headers()
   const hdr = await headers();
@@ -37,8 +39,12 @@ export default async function page({ params }) {
         playsInline
         className="absolute inset-0 w-full h-full object-cover object-top -z-20"
       />
+
+
       <div className='absolute w-full h-full black-overlay mix-blend-overlay -z-20 top-0'></div>
       <div className='absolute w-full h-full black-overlay-top mix-blend-multiply -z-20 top-0'></div>
+
+      
 
 
 
@@ -67,7 +73,7 @@ export default async function page({ params }) {
 
               </input>
 
-              <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-wider' 
+              <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-wide' 
                 style={{
                   textShadow: [
                     '-1px -1px 0 #000',
@@ -94,7 +100,7 @@ export default async function page({ params }) {
               <img src={`/assets/QUESTION${id}.png`} className='h-4'></img>
             </div>
 
-            <p className='text-2xl mt-10 filter drop-shadow-lg text-outline tracking-wider'
+            <p className='text-2xl mt-10 filter drop-shadow-lg text-outline tracking-wide'
               style={{
                 textShadow: [
                   '-1px -1px 0 #000',
@@ -127,7 +133,7 @@ export default async function page({ params }) {
 
               </input>
 
-              <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-wider'
+              <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-wide'
                 style={{
                   textShadow: [
                     '-1px -1px 0 #000',
@@ -159,14 +165,16 @@ export default async function page({ params }) {
           </div>
         </Link>
 
-        <Link href="/">
+        <Link href={`/question/${id}/wordcloud`}>
           <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center'>
             <CloudHail className="w-6 h-6 text-white -ml-0.5" />
           </div>
         </Link>
 
+        
+
         <Link href={id==4 ? `/` : `/question/${Number(id)+1}`}>
-          <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center'>
+          <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center z-50'>
             <ChevronRight className="w-6 h-6 text-white ml-0.5"/>
           </div>
         </Link>

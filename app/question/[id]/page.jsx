@@ -53,7 +53,7 @@ export default async function page({ params }) {
 
 
 
-          <p className='text-3xl mt-8 filter drop-shadow-lg text-outline'
+          <p className='text-3xl mt-8 filter drop-shadow-lg text-outline tracking-wide'
             style={{
               textShadow: [
                 '-1px -1px 0 #000',
