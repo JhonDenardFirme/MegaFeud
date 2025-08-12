@@ -44,7 +44,7 @@ export default async function page({ params }) {
       <div className='absolute w-full h-full black-overlay mix-blend-overlay -z-20 top-0'></div>
       <div className='absolute w-full h-full black-overlay-top mix-blend-multiply -z-20 top-0'></div>
 
-      
+
 
       {/* MAIN CONTAINER */}
       <div className='flex flex-col items-center justify-center w-full -mt-8 '>
@@ -70,7 +70,7 @@ export default async function page({ params }) {
 
               </input>
 
-              <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-wide' 
+              <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-wide'
                 style={{
                   textShadow: [
                     '-1px -1px 0 #000',
@@ -154,11 +154,11 @@ export default async function page({ params }) {
       <AnswerBoard answers={question.answers}></AnswerBoard>
 
 
-      <MusicButton defaultVolume={0.2} src="/BG/BGM-Think.mp3"/>
+      <MusicButton defaultVolume={0.5} src="/BG/BGM-Think.mp3" />
 
       {/* NAVIGATION BUTTONS */}
       <div className='absolute flex flex-row gap-16 items-center justify-center w-1/2 bottom-8'>
-        <Link href={id==1? `/question/${id}` : `/question/${id}`}>
+        <Link href={id == 1 ? `/question/${id}` : `/question/${id}`}>
           <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center'>
             <ChevronLeft className="w-6 h-6 text-white -ml-0.5" />
           </div>
@@ -170,9 +170,9 @@ export default async function page({ params }) {
           </div>
         </Link>
 
-        <Link href={id==4 ? `/` : `/question/${Number(id)+1}`}>
+        <Link href={id == 4 ? `/` : `/question/${Number(id) + 1}`}>
           <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center z-50'>
-            <ChevronRight className="w-6 h-6 text-white ml-0.5"/>
+            <ChevronRight className="w-6 h-6 text-white ml-0.5" />
           </div>
         </Link>
       </div>

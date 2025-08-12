@@ -63,7 +63,7 @@ export default async function page({ params }) {
 
       </div>
 
-      <MusicButton defaultVolume={0.2} src="/BG/BGM-Think.mp3"/>
+      <MusicButton defaultVolume={0.5} src="/BG/BGM-Think.mp3"/>
 
       {/* NAVIGATION BUTTONS */}
       <div className='absolute flex flex-row gap-16 items-center justify-center w-1/2 bottom-8'>
