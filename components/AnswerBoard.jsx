@@ -62,7 +62,7 @@ export default function AnswerBoard({ answers }) {
     
 
     return (
-        <div className="grid grid-cols-2 grid-rows-5 gap-8 items-center justify-center w-full h-[50%] mt-8 py-8 px-64 gap-x-22">
+        <div className="grid grid-cols-2 grid-rows-5 grid-flow-col gap-8 items-center justify-center w-full h-[50%] mt-8 py-8 px-64 gap-x-22">
             
             <audio ref={hoverRef} src="/BG/hover.wav" preload="auto" />
             <audio ref={clickRef} src="/BG/click2.wav" preload="auto" />
