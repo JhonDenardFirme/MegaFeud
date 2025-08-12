@@ -8,17 +8,16 @@ import AnswerBoard from '@/components/AnswerBoard';
 
 export default async function page({ params }) {
 
-  // 1) await the params object
+  // 1) Await the params object
   const { id } = await params;
 
-
-  // 2) await headers()
+  // 2) Await headers()
   const hdr = await headers();
   const host = hdr.get("x-forwarded-host") ?? hdr.get("host");
   const protocol = host?.includes("localhost") ? "http" : "https";
   const origin = `${protocol}://${host}`;
 
-  // 3) now build a valid absolute URL
+  // 3) Build an Absolute URL
   const res = await fetch(
     `${origin}/api/questions/${id}`,
     { next: { revalidate: 0 } }
@@ -51,20 +50,13 @@ export default async function page({ params }) {
           <div className='rounded-2xl overflow-hidden flex justify-center w-[85%] h-auto mb-8'>
             <img src={`/assets/wordcloud/${id}.png`} className='w-full h-full'></img>
           </div>
-          
 
-            <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-wider' 
-                style={{
-                  textShadow: [
-                    '-1px -1px 0 #000',
-                    ' 1px -1px 0 #000',
-                    '-1px  1px 0 #000',
-                    ' 1px  1px 0 #000',
-                  ].join(',')
-                }}>
-                Based on the Company's Facebook Posts from January to July 2025
-            </p>
-        
+
+          <p className='text-sm filter drop-shadow-lg text-outline z-50 -mt-2 tracking-widest'
+          >
+            Based on the Company's Facebook Posts from January to July 2025
+          </p>
+
         </div>
 
 

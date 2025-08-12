@@ -63,7 +63,7 @@ export default function AnswerBoard({ answers }) {
 
     return (
         <div className="grid grid-cols-2 grid-rows-5 gap-8 items-center justify-center w-full h-[50%] mt-8 py-8 px-64 gap-x-22">
-            {/* Preloaded, hidden masters (dummy directory) */}
+            
             <audio ref={hoverRef} src="/BG/hover.wav" preload="auto" />
             <audio ref={clickRef} src="/BG/click2.wav" preload="auto" />
 
@@ -73,9 +73,9 @@ export default function AnswerBoard({ answers }) {
                     {/* Diamond button */}
                     <button
                         type="button"
-                        onPointerEnter={playHover}               /* hover sound (mouse/touch) */
-                        onFocus={playHover}                      /* keyboard focus a11y */
-                        onClick={() => { playClick(); toggle(i); }} /* click sound + toggle reveal */
+                        onPointerEnter={playHover}               /* Hover SFX */
+                        onFocus={playHover}                      /* Keyboard Focus */
+                        onClick={() => { playClick(); toggle(i); }} /* Click SFX */
                         className="relative inline-block group focus:outline-none hover:cursor-pointer"
                         aria-pressed={revealed[i]}
                         aria-label={revealed[i] ? 'Hide answer' : 'Reveal answer'}
@@ -89,12 +89,12 @@ export default function AnswerBoard({ answers }) {
                         </div>
                     </button>
 
-                    {/* Stacked layers: "?" fades out, real content fades/slides in */}
+                    {/* Content Layer */}
                     <div className="question-container relative overflow-hidden flex-1 h-full linear-blue mix-blend-plus-lighter rounded-2xl flex items-center pl-6">
 
                         <div className="score-layer isolate h-full w-18 linear-blue mix-blend-screen rounded-2xl absolute right-0 z-0" />
                         
-                        {/* Placeholder Container */}
+                        {/* Placeholder Layer */}
                         <div className={`absolute inset-0 flex items-center pl-6 transition-all duration-300 ease-out
                           ${revealed[i] ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}
                         >
@@ -117,7 +117,7 @@ export default function AnswerBoard({ answers }) {
                             </div>
                         </div>
 
-                        {/* Real Content Container */}
+                        {/* Real Content Layer */}
                         <div className={`absolute inset-0 flex items-center pl-6 transition-all duration-300 ease-out
                           ${revealed[i] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
                         >

@@ -8,17 +8,16 @@ import AnswerBoard from '@/components/AnswerBoard';
 
 export default async function page({ params }) {
 
-  // 1) await the params object
+  // 1) Await the params object
   const { id } = await params;
 
-
-  // 2) await headers()
+  // 2) Await headers()
   const hdr = await headers();
   const host = hdr.get("x-forwarded-host") ?? hdr.get("host");
   const protocol = host?.includes("localhost") ? "http" : "https";
   const origin = `${protocol}://${host}`;
 
-  // 3) now build a valid absolute URL
+  // 3) Build an Absolute URL
   const res = await fetch(
     `${origin}/api/questions/${id}`,
     { next: { revalidate: 0 } }
@@ -28,13 +27,7 @@ export default async function page({ params }) {
   const question = await res.json();
 
 
-  // Click SFX Logic
-  
-
-
   return (
-
-    
 
     <div className="relative flex flex-col w-full h-screen items-center justify-center isolation isolate">
       {/* VIDEO BG */}
@@ -52,9 +45,6 @@ export default async function page({ params }) {
       <div className='absolute w-full h-full black-overlay-top mix-blend-multiply -z-20 top-0'></div>
 
       
-
-
-
 
       {/* MAIN CONTAINER */}
       <div className='flex flex-col items-center justify-center w-full -mt-8 '>
@@ -177,8 +167,6 @@ export default async function page({ params }) {
             <CloudHail className="w-6 h-6 text-white -ml-0.5" />
           </div>
         </Link>
-
-        
 
         <Link href={id==4 ? `/` : `/question/${Number(id)+1}`}>
           <div className='flex flex-col w-12 h-12 rounded-full border-[1px] boder-white/80 mix-blend-lighten items-center justify-center z-50'>

@@ -68,9 +68,9 @@ export default function Home() {
       {needsAction && (
         <button
           onClick={enableSound}
-          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white"
+          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white hover:cursor-pointer"
         >
-          Enable sound
+          <VolumeOffIcon></VolumeOffIcon>
         </button>
       )}
 
@@ -78,7 +78,7 @@ export default function Home() {
       {!needsAction && (
         <button
           onClick={toggleSound}
-          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white"
+          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white hover:cursor-pointer"
         >
           {
             isPlaying ? <Volume2Icon></Volume2Icon> : <VolumeOffIcon></VolumeOffIcon>

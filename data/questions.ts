@@ -10,22 +10,23 @@ export interface Question {
 }
 
 export const MegaQuestions: Question[] = [
-    {
+        {
         id: 1,
-        question: "What are the Top Words for Ayala Land?",
+        question: "What are the Top Words for SMDC?",
         answers: [
-            { answer: "community", points: 37 },
-            { answer: "makati", points: 36 },
-            { answer: "life", points: 35 },
-            { answer: "estate", points: 34 },
-            { answer: "philippine", points: 31 },
-            { answer: "together", points: 24 },
-            { answer: "space", points: 23 },
-            { answer: "south", points: 22 },
-            { answer: "urban", points: 21 },
-            { answer: "development", points: 21 }
+            { answer: "home", points: 72 },
+            { answer: "residence", points: 67 },
+            { answer: "life", points: 67 },
+            { answer: "community", points: 45 },
+            { answer: "city", points: 36 },
+            { answer: "experience", points: 27 },
+            { answer: "step", points: 26 },
+            { answer: "smdcthegoodguys", points: 25 },
+            { answer: "designed", points: 23 },
+            { answer: "move", points: 23 }
         ]
     },
+
     {
         id: 2,
         question: "What are the Top Words for Robinsons Land?",
@@ -42,22 +43,25 @@ export const MegaQuestions: Question[] = [
             { answer: "business", points: 26 }
         ]
     },
+
+
     {
         id: 3,
-        question: "What are the Top Words for SMDC?",
+        question: "What are the Top Words for Ayala Land?",
         answers: [
-            { answer: "home", points: 72 },
-            { answer: "residence", points: 67 },
-            { answer: "life", points: 67 },
-            { answer: "community", points: 45 },
-            { answer: "city", points: 36 },
-            { answer: "experience", points: 27 },
-            { answer: "step", points: 26 },
-            { answer: "smdcthegoodguys", points: 25 },
-            { answer: "designed", points: 23 },
-            { answer: "move", points: 23 }
+            { answer: "community", points: 37 },
+            { answer: "makati", points: 36 },
+            { answer: "life", points: 35 },
+            { answer: "estate", points: 34 },
+            { answer: "philippine", points: 31 },
+            { answer: "together", points: 24 },
+            { answer: "space", points: 23 },
+            { answer: "south", points: 22 },
+            { answer: "urban", points: 21 },
+            { answer: "development", points: 21 }
         ]
     },
+
     {
         id: 4,
         question: "What are the Top Words for Megaworld?",
