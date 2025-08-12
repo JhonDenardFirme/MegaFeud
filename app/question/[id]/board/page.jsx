@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight, CircleQuestionMark, CloudHail } from 'lucide
 import Link from 'next/link';
 import React from 'react'
 import { headers } from 'next/headers';
-
+import MusicButton from "@/components/MusicButton";
 
 import AnswerBoard from '@/components/AnswerBoard';
 
@@ -153,6 +153,8 @@ export default async function page({ params }) {
       {/* ANSWER BOARD */}
       <AnswerBoard answers={question.answers}></AnswerBoard>
 
+
+      <MusicButton defaultVolume={0.2} src="/BG/BGM-Think.mp3"/>
 
       {/* NAVIGATION BUTTONS */}
       <div className='absolute flex flex-row gap-16 items-center justify-center w-1/2 bottom-8'>

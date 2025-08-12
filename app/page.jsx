@@ -2,6 +2,7 @@
 import { Volume2Icon, VolumeOffIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import MusicButton from "@/components/MusicButton";
 
 export default function Home() {
   const audioRef = useRef(null);
@@ -62,29 +63,10 @@ export default function Home() {
         className="absolute inset-0 w-full h-full object-cover object-bottom -z-10"
       />
 
-      <audio ref={audioRef} src="/BG/BGM.mp3" loop preload="auto" />
 
 
-      {needsAction && (
-        <button
-          onClick={enableSound}
-          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white hover:cursor-pointer"
-        >
-          <VolumeOffIcon></VolumeOffIcon>
-        </button>
-      )}
 
-
-      {!needsAction && (
-        <button
-          onClick={toggleSound}
-          className="fixed bottom-6 right-6 rounded-full px-4 py-2 bg-white/20 backdrop-blur text-white hover:cursor-pointer"
-        >
-          {
-            isPlaying ? <Volume2Icon></Volume2Icon> : <VolumeOffIcon></VolumeOffIcon>
-          }
-        </button>
-      )}
+      <MusicButton defaultVolume={1} src="/BG/BGM-Main2.mp3"/>
 
       {/* Header */}
       <div className="flex flex-col items-center justify-center">

@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight, CircleQuestionMark } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 import { headers } from 'next/headers';
+import MusicButton from "@/components/MusicButton";
 
 
 export default async function page({ params }) {
@@ -69,7 +70,7 @@ export default async function page({ params }) {
       </div>
 
 
-      
+      <MusicButton defaultVolume={0.5} src="/BG/BGM-Quest.mp3"/>
 
       {/* NAVIGATION BUTTONS */}
       <div className='absolute flex flex-row gap-16 items-center justify-center w-1/2 bottom-8'>

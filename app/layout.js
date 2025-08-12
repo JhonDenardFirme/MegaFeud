@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { Gasoek_One } from "next/font/google";
 import "./globals.css";
+import { AudioProvider } from "@/components/AudioProvider";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +27,8 @@ export default function RootLayout({ children }) {
       <body
         className={`${gasoek.variable} antialiased`}
       >
-        {children}
+        <AudioProvider> {children} </AudioProvider>
+        
       </body>
     </html>
   );
